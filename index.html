@@ -1,1 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akashdeep Boxes | Luxury Packaging & Wedding Invitation Boxes</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
+  <style>
+    :root {
+      --bg-base: #f3f5f8;
+      --shadow-light: #ffffff;
+      --shadow-dark: #d5dbe4;
+      --accent-warm: #c5a880;
+      --accent-sage: #889d8f;
+      --text-main: #2b333e;
+      --text-muted: #6e7987;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    .font-serif-luxury {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    /* Soft Neumorphism System */
+    .neu-flat {
+      background: var(--bg-base);
+      box-shadow: 8px 8px 18px var(--shadow-dark), -8px -8px 18px var(--shadow-light);
+    }
+
+    .neu-pressed {
+      background: var(--bg-base);
+      box-shadow: inset 4px 4px 9px var(--shadow-dark), inset -4px -4px 9px var(--shadow-light);
+    }
+
+    .neu-concave {
+      background: linear-gradient(145deg, #e7ebf0, #ffffff);
+      box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+    }
+
+    .neu-button {
+      background: var(--bg-base);
+      box-shadow: 5px 5px 12px var(--shadow-dark), -5px -5px 12px var(--shadow-light);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .neu-button:hover {
+      box-shadow: 2px 2px 6px var(--shadow-dark), -2px -2px 6px var(--shadow-light);
+      transform: translateY(1px);
+    }
+
+    .neu-button:active, .neu-button.active {
+      box-shadow: inset 3px 3px 7px var(--shadow-dark), inset -3px -3px 7px var(--shadow-light);
+      color: #9c7b4f;
+    }
+
+    /* Subtle Glass Elements */
+    .neu-tag {
+      background: rgba(243, 245, 248, 0.85);
+      box-shadow: 3px 3px 8px var(--shadow-dark), -3px -3px 8px var(--shadow-light);
+    }
+
+    /* 3D Box Engine Styles */
+    .viewport-3d {
+      perspective: 1200px;
+      perspective-origin: 50% 45%;
+    }
+
+    .box-world {
+      position: relative;
+      width: 260px;
+      height: 180px;
+      transform-style: preserve-3d;
+      transition: transform 0.2s ease-out;
+    }
+
+    .box-face {
+      position: absolute;
+      box-sizing: border-box;
+      backface-visibility: visible;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* Box Geometry (W: 260px, H: 80px, D: 200px) */
+    .face-top {
+      width: 260px;
+      height: 200px;
+      top: -10px;
+      transform: rotateX(90deg) translateZ(40px);
+    }
+
+    .face-bottom {
+      width: 260px;
+      height: 200px;
+      top: -10px;
+      transform: rotateX(-90deg) translateZ(40px);
+    }
+
+    .face-front {
+      width: 260px;
+      height: 80px;
+      top: 50px;
+      transform: rotateY(0deg) translateZ(100px);
+    }
+
+    .face-back {
+      width: 260px;
+      height: 80px;
+      top: 50px;
+      transform: rotateY(180deg) translateZ(100px);
+    }
+
+    .face-left {
+      width: 200px;
+      height: 80px;
+      top: 50px;
+      left: 30px;
+      transform: rotateY(-90deg) translateZ(130px);
+    }
+
+    .face-right {
+      width: 200px;
+      height: 80px;
+      top: 50px;
+      left: 30px;
+      transform: rotateY(90deg) translateZ(130px);
+    }
+
+    /* Interactive Lid for Opening Animation */
+    .lid-top-hinge {
+      position: absolute;
+      width: 264px;
+      height: 204px;
+      left: -2px;
+      top: -12px;
+      transform-origin: back top;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: rotateX(90deg) translateZ(42px);
+    }
+
+    .lid-open .lid-top-hinge {
+      transform: rotateX(175deg) translateZ(42px);
+    }
+
+    /* Texture/Finish Styles */
+    .finish-matte-cashmere {
+      background: linear-gradient(135deg, #f5efe6, #e7ddcf);
+      color: #645542;
+    }
+    .finish-gold-foil {
+      background: linear-gradient(135deg, #fdfbf7, #f4ece1);
+      color: #b38b4d;
+    }
+    .finish-sage-luxury {
+      background: linear-gradient(135deg, #eaf0ec, #d5ded8);
+      color: #42584a;
+    }
+    .finish-pearl-blush {
+      background: linear-gradient(135deg, #faf5f3, #efe3df);
+      color: #8c5b55;
+    }
+
+    /* Foil Stamp Effects */
+    .foil-gold-text {
+      background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 1px 1px 2px rgba(179, 139, 77, 0.35);
+      filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.7));
+    }
+
+    .deboss-text {
+      color: rgba(90, 77, 65, 0.85);
+      text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8), -1px -1px 1px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Smooth Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cfd6df;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body class="selection:bg-amber-100 selection:text-amber-900">
+
+  <!-- TOP ANNOUNCEMENT BAR (Soft & Mind-Calming) -->
+  <div class="w-full bg-[#ebf0f5] border-b border-[#dde3ec] py-2 px-4 text-center text-xs tracking-wider text-slate-500 font-medium">
+    ✨ <span class="text-slate-800 font-semibold">Akashdeep Boxes</span> — Master Craftsmen in Custom Rigid Sweet Boxes, Wedding Invitations & Luxury Packaging • Delivering Pan-India
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-[#f3f5f8]/90 border-b border-white/50 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo / Emblem -->
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="w-12 h-12 rounded-2xl neu-flat flex items-center justify-center text-[#9c7b4f] group-hover:scale-105 transition-transform">
+          <i data-lucide="package-open" class="w-6 h-6 stroke-[1.75]"></i>
+        </div>
+        <div>
+          <span class="font-serif-luxury text-2xl font-bold tracking-tight text-slate-800 block leading-tight">AKASHDEEP</span>
+          <span class="text-[10px] uppercase tracking-[0.25em] text-[#9c7b4f] font-semibold">Luxury Box Makers</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+        <a href="#3d-visualizer" class="hover:text-slate-900 transition-colors">3D Customizer Studio</a>
+        <a href="#collections" class="hover:text-slate-900 transition-colors">Collections</a>
+        <a href="#calculator" class="hover:text-slate-900 transition-colors">Instant Estimate</a>
+        <a href="#about" class="hover:text-slate-900 transition-colors">Craft & Quality</a>
+      </nav>
+
+      <!-- Quick Action CTA -->
+      <div class="flex items-center space-x-3">
+        <a href="https://wa.me/?text=Hello%20Akashdeep%20Boxes%2C%20I%20want%20to%20discuss%20custom%20printed%20boxes%20for%20my%20business." 
+           target="_blank"
+           class="px-4 py-2.5 rounded-xl neu-button text-xs sm:text-sm font-semibold text-slate-700 flex items-center gap-2">
+          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
+          <span>WhatsApp Us</span>
+        </a>
+        <button onclick="openSampleKitModal()" 
+                class="hidden sm:flex px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#9c7b4f] to-[#b38b4d] text-white text-xs sm:text-sm font-semibold shadow-md shadow-[#9c7b4f]/25 hover:brightness-105 transition-all items-center gap-2">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+          <span>Order Sample Kit</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-12 pb-16 md:pt-16 md:pb-24 px-4 overflow-hidden">
+    <div class="max-w-6xl mx-auto text-center space-y-6">
+      
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full neu-tag text-xs font-semibold tracking-wide text-slate-600">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Direct Factory Manufacturers • Over 500+ Dies & Designs Available
+      </div>
+
+      <h1 class="font-serif-luxury text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-800 leading-[1.15]">
+        Har Box Mein Ek Pehchan.<br>
+        <span class="italic font-normal text-[#9c7b4f]">Unforgettable Packaging</span> for Celebrations & Sweets.
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
+        Premium Mithai Boxes, Designer Wedding Card Boxes, Velvet Hampers & Custom Rigid Printed Packaging crafted with meticulous detail, gold foil embossing, and certified food-grade interior boards.
+      </p>
+
+      <!-- Key Value Badges -->
+      <div class="pt-2 flex flex-wrap justify-center gap-4 text-xs font-medium text-slate-600">
+        <div class="neu-flat px-4 py-2 rounded-xl flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-4 h-4 text-[#9c7b4f]"></i>
+          <span>100% Food-Grade Eco Boards</span>
+        </div>
+        <div class="neu-flat px-4 py-2 rounded-xl flex items-center gap-2">
+          <i data-lucide="layers" class="w-4 h-4 text-[#9c7b4f]"></i>
+          <span>Rigid Kappa Board (800 - 1600 GSM)</span>
+        </div>
+        <div class="neu-flat px-4 py-2 rounded-xl flex items-center gap-2">
+          <i data-lucide="truck" class="w-4 h-4 text-[#9c7b4f]"></i>
+          <span>Pan-India Safe Cargo Shipping</span>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#3d-visualizer" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#9c7b4f] to-[#b38b4d] text-white font-medium shadow-lg shadow-[#9c7b4f]/25 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
+          <i data-lucide="box" class="w-5 h-5"></i>
+          <span>Launch 3D Customizer Studio</span>
+        </a>
+        <a href="#collections" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl neu-button text-slate-700 font-medium hover:text-[#9c7b4f] transition-all flex items-center justify-center gap-2">
+          <i data-lucide="eye" class="w-5 h-5"></i>
+          <span>Explore Design Portfolio</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- KILLER FEATURE: 3D REAL-TIME INTERACTIVE BOX VISUALIZER -->
+  <section id="3d-visualizer" class="py-14 px-4 bg-gradient-to-b from-transparent via-[#ebf0f6] to-transparent">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-block px-3 py-1 rounded-full neu-tag text-[11px] font-bold uppercase tracking-wider text-[#9c7b4f] mb-3">
+          Interactive Client Showcase
+        </div>
+        <h2 class="font-serif-luxury text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800">
+          Real-Time 3D Box Customizer
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-2">
+          Type your shop or wedding couple name below. Spin the box, pick finishes, test compartments and preview in true 360° perspective.
+        </p>
+      </div>
+
+      <!-- Main Visualizer Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Left: 3D Canvas Viewport (7 Cols) -->
+        <div class="lg:col-span-7 neu-concave rounded-3xl p-6 sm:p-10 relative flex flex-col items-center justify-center min-h-[460px] select-none border border-white">
+          
+          <!-- Top Floating Actions -->
+          <div class="absolute top-5 left-5 right-5 flex justify-between items-center z-20 pointer-events-auto">
+            <div class="flex items-center gap-2">
+              <span id="badgeBoxType" class="px-3 py-1 rounded-lg neu-flat text-xs font-semibold text-slate-700">Mithai Luxury Box</span>
+              <span id="badgeFinish" class="px-3 py-1 rounded-lg neu-flat text-xs font-medium text-[#9c7b4f]">Gold Foil Emboss</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="toggleLid()" id="btnLid" class="px-3 py-1.5 rounded-lg neu-button text-xs font-semibold text-slate-700 flex items-center gap-1">
+                <i data-lucide="lock-open" class="w-3.5 h-3.5 text-[#9c7b4f]"></i>
+                <span id="lidStatusLabel">Open Lid</span>
+              </button>
+              <button onclick="resetRotation()" title="Reset Angle" class="p-1.5 rounded-lg neu-button text-slate-600">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3D Stage -->
+          <div class="viewport-3d w-full h-[320px] flex items-center justify-center cursor-grab active:cursor-grabbing my-8" id="canvas3D">
+            
+            <div class="box-world finish-gold-foil" id="box3D">
+              
+              <!-- TOP FACE (The Main Lid) -->
+              <div class="box-face face-top rounded-lg shadow-inner overflow-hidden finish-gold-foil p-4 text-center">
+                <!-- Ribbon Graphic on Lid (Optional Toggle) -->
+                <div id="ribbonOverlay" class="absolute inset-x-0 h-8 top-1/2 -translate-y-1/2 bg-amber-200/40 border-y border-amber-300/60 hidden pointer-events-none"></div>
+                
+                <div class="relative z-10 flex flex-col items-center justify-center h-full border border-dashed border-[#b38b4d]/30 rounded-md p-3">
+                  <div class="text-[9px] uppercase tracking-[0.25em] text-[#9c7b4f] font-semibold" id="previewSubtext">Pure Desi Ghee Confections</div>
+                  <div class="font-serif-luxury text-2xl sm:text-3xl font-bold tracking-wide mt-1 foil-gold-text" id="previewBrandName">Shree Sweets</div>
+                  <div class="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
+                    <span>✦</span> Luxury Rigid Edition <span>✦</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BOTTOM FACE -->
+              <div class="box-face face-bottom finish-gold-foil">
+                <span class="text-[9px] text-slate-400 uppercase tracking-widest">Akashdeep Boxes • Food Grade</span>
+              </div>
+
+              <!-- FRONT FACE -->
+              <div class="box-face face-front finish-gold-foil px-4 flex justify-between items-center">
+                <div class="w-2 h-2 rounded-full bg-[#b38b4d]/50"></div>
+                <span class="font-serif-luxury text-xs font-semibold tracking-wider opacity-80" id="previewFrontSmall">Shree Sweets</span>
+                <div class="w-2 h-2 rounded-full bg-[#b38b4d]/50"></div>
+              </div>
+
+              <!-- BACK FACE -->
+              <div class="box-face face-back finish-gold-foil">
+                <div class="w-8 h-1 bg-[#b38b4d]/40 rounded-full"></div>
+              </div>
+
+              <!-- LEFT FACE -->
+              <div class="box-face face-left finish-gold-foil">
+                <div class="text-[9px] tracking-widest uppercase opacity-60">1000g Net wt</div>
+              </div>
+
+              <!-- RIGHT FACE -->
+              <div class="box-face face-right finish-gold-foil">
+                <div class="text-[9px] tracking-widest uppercase opacity-60">Handcrafted</div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Bottom Rotation Controls & Presets -->
+          <div class="w-full pt-4 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="move" class="w-4 h-4 text-[#9c7b4f]"></i>
+              <span class="hidden sm:inline">Drag mouse/touch to spin freely</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-[11px] font-semibold text-slate-400 mr-1">Views:</span>
+              <button onclick="setAngle('isometric')" class="px-2.5 py-1 rounded neu-button text-[11px] font-medium">Isometric</button>
+              <button onclick="setAngle('top')" class="px-2.5 py-1 rounded neu-button text-[11px] font-medium">Top Lid</button>
+              <button onclick="setAngle('front')" class="px-2.5 py-1 rounded neu-button text-[11px] font-medium">Front</button>
+              <button onclick="setAngle('side')" class="px-2.5 py-1 rounded neu-button text-[11px] font-medium">Side</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Realtime Control Studio (5 Cols) -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Box Personality & Type Selection -->
+          <div class="neu-flat rounded-2xl p-5 space-y-3">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
+              <i data-lucide="shapes" class="w-4 h-4 text-[#9c7b4f]"></i>
+              1. Select Box Category
+            </label>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="setBoxType('mithai')" id="btnTypeMithai" class="box-type-btn p-2.5 rounded-xl neu-button active text-center text-xs font-semibold">
+                Mithai Rigid
+              </button>
+              <button onclick="setBoxType('wedding')" id="btnTypeWedding" class="box-type-btn p-2.5 rounded-xl neu-button text-center text-xs font-semibold">
+                Wedding Card
+              </button>
+              <button onclick="setBoxType('hamper')" id="btnTypeHamper" class="box-type-btn p-2.5 rounded-xl neu-button text-center text-xs font-semibold">
+                Dryfruit Box
+              </button>
+            </div>
+          </div>
+
+          <!-- Custom Branding Input -->
+          <div class="neu-flat rounded-2xl p-5 space-y-4">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
+              <i data-lucide="type" class="w-4 h-4 text-[#9c7b4f]"></i>
+              2. Your Brand / Couple Name (Live Emboss)
+            </label>
+            <div class="space-y-2">
+              <input type="text" id="inputBrandName" value="Shree Sweets" 
+                     placeholder="Enter Brand Name (e.g., Aggarwal Sweets)"
+                     class="w-full px-4 py-3 rounded-xl neu-pressed text-sm text-slate-800 font-medium focus:outline-none focus:ring-1 focus:ring-[#9c7b4f]">
+              <input type="text" id="inputSubtext" value="Pure Desi Ghee Confections" 
+                     placeholder="Sub-tagline (e.g., Since 1984 or Wedding Invites)"
+                     class="w-full px-4 py-2.5 rounded-xl neu-pressed text-xs text-slate-600 focus:outline-none focus:ring-1 focus:ring-[#9c7b4f]">
+            </div>
+          </div>
+
+          <!-- Finishes & Textures -->
+          <div class="neu-flat rounded-2xl p-5 space-y-3">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
+              <i data-lucide="palette" class="w-4 h-4 text-[#9c7b4f]"></i>
+              3. Select Luxury Finish
+            </label>
+            <div class="grid grid-cols-2 gap-2.5">
+              <button onclick="setFinish('finish-gold-foil', 'Gold Foil Stamping', 'foil-gold-text')" class="finish-btn p-2.5 rounded-xl neu-button active flex items-center gap-2 text-xs font-medium">
+                <span class="w-4 h-4 rounded-full bg-gradient-to-r from-amber-300 to-amber-600 shadow"></span>
+                <span>Gold Foil Foil</span>
+              </button>
+              <button onclick="setFinish('finish-matte-cashmere', 'Matte Cashmere Oat', 'deboss-text')" class="finish-btn p-2.5 rounded-xl neu-button flex items-center gap-2 text-xs font-medium">
+                <span class="w-4 h-4 rounded-full bg-[#e7ddcf] shadow"></span>
+                <span>Warm Cashmere</span>
+              </button>
+              <button onclick="setFinish('finish-sage-luxury', 'Sage Eco Velvet', 'deboss-text')" class="finish-btn p-2.5 rounded-xl neu-button flex items-center gap-2 text-xs font-medium">
+                <span class="w-4 h-4 rounded-full bg-[#889d8f] shadow"></span>
+                <span>Sage Green Velvet</span>
+              </button>
+              <button onclick="setFinish('finish-pearl-blush', 'Rose Pearl Minimal', 'foil-gold-text')" class="finish-btn p-2.5 rounded-xl neu-button flex items-center gap-2 text-xs font-medium">
+                <span class="w-4 h-4 rounded-full bg-[#f1dfdb] shadow"></span>
+                <span>Rose Pearl Matte</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Instant Action -->
+          <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200/70 flex items-center justify-between">
+            <div>
+              <div class="text-xs font-semibold text-slate-800">Like this configuration?</div>
+              <div class="text-[11px] text-slate-600">Send specs directly to our production unit.</div>
+            </div>
+            <button onclick="shareCustomConfigWhatsApp()" class="px-3.5 py-2 rounded-xl bg-emerald-600 text-white text-xs font-semibold flex items-center gap-1.5 shadow hover:bg-emerald-700 transition">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span>Send Spec</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRODUCT SHOWCASE WITH MULTI-ANGLE PREVIEW -->
+  <section id="collections" class="py-16 px-4">
+    <div class="max-w-7xl mx-auto space-y-10">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-[#9c7b4f]">Handcrafted Excellence</span>
+          <h2 class="font-serif-luxury text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 mt-1">
+            Curated Box Catalog
+          </h2>
+          <p class="text-slate-600 text-sm mt-1 max-w-xl">
+            Click on any box to switch angles (Exterior, Compartment Grid, Isometric perspective, and Open View).
+          </p>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterCatalog('all')" class="cat-pill px-4 py-2 rounded-xl neu-button active text-xs font-semibold">All Boxes</button>
+          <button onclick="filterCatalog('mithai')" class="cat-pill px-4 py-2 rounded-xl neu-button text-xs font-semibold">Mithai & Sweets</button>
+          <button onclick="filterCatalog('wedding')" class="cat-pill px-4 py-2 rounded-xl neu-button text-xs font-semibold">Wedding & Invites</button>
+          <button onclick="filterCatalog('dryfruit')" class="cat-pill px-4 py-2 rounded-xl neu-button text-xs font-semibold">Dryfruit & Hampers</button>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="productGrid">
+        
+        <!-- Product 1: The Royal Kaju Katli / Sweet Hamper Box -->
+        <div class="product-card neu-flat rounded-3xl p-5 space-y-4 transition hover:-translate-y-1" data-category="mithai">
+          <!-- Interactive Visual Card -->
+          <div class="neu-concave rounded-2xl p-4 h-64 relative flex items-center justify-center overflow-hidden border border-white">
+            <div class="absolute top-3 left-3 neu-tag px-2.5 py-1 rounded-md text-[10px] font-bold text-emerald-700">
+              Food Grade Certified
+            </div>
+            
+            <!-- Dynamic Angle Display (Simulated High-Detail SVG Vector Renders) -->
+            <div id="p1-view" class="w-full h-full flex items-center justify-center transition-all duration-300">
+              <!-- Default Closed Top Angle -->
+              <div class="relative w-44 h-40 bg-gradient-to-br from-[#faf6f0] to-[#e8decb] rounded-xl shadow-lg border border-[#c5a880]/40 flex flex-col items-center justify-center p-3 text-center">
+                <div class="w-full h-full border border-dashed border-[#b38b4d]/40 rounded-lg p-2 flex flex-col justify-between items-center">
+                  <div class="w-3 h-3 rounded-full bg-[#b38b4d]/40"></div>
+                  <div>
+                    <div class="text-[8px] tracking-[0.2em] uppercase text-[#b38b4d] font-bold">Heritage Sweets</div>
+                    <div class="font-serif-luxury text-lg font-bold text-slate-800">Royal Barfi Box</div>
+                    <div class="text-[9px] text-slate-500">12 Cavity Food-Grade Tray</div>
+                  </div>
+                  <div class="w-8 h-1 bg-[#b38b4d]/30 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Angle Switcher Bar -->
+            <div class="absolute bottom-2 inset-x-2 flex justify-center gap-1.5 z-10">
+              <button onclick="changeProductView('p1', 'closed')" class="p1-btn text-[10px] px-2 py-0.5 rounded neu-button active">Top</button>
+              <button onclick="changeProductView('p1', 'inside')" class="p1-btn text-[10px] px-2 py-0.5 rounded neu-button">Partition Cavity</button>
+              <button onclick="changeProductView('p1', 'side')" class="p1-btn text-[10px] px-2 py-0.5 rounded neu-button">Side Profile</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-serif-luxury text-xl font-bold text-slate-800">Imperial 12-Cavity Mithai Box</h3>
+                <p class="text-xs text-slate-500">Rigid 1200 GSM Board with Velvet Finish</p>
+              </div>
+              <span class="text-xs font-bold text-[#9c7b4f] neu-tag px-2.5 py-1 rounded-lg">₹48 - ₹85 / pc</span>
+            </div>
+
+            <div class="mt-3 grid grid-cols-2 gap-2 text-[11px] text-slate-600 border-t border-slate-200/80 pt-3">
+              <div>• <strong>MOQ:</strong> 500 Pieces</div>
+              <div>• <strong>Foiling:</strong> Gold / Rose Gold</div>
+              <div>• <strong>Tray:</strong> Food-Grade Gold PET</div>
+              <div>• <strong>Print:</strong> 5-Color Heidelberg</div>
+            </div>
+
+            <button onclick="openQuoteWithProduct('Imperial 12-Cavity Mithai Box')" class="w-full mt-4 py-2.5 rounded-xl neu-button text-xs font-bold text-slate-700 hover:text-[#9c7b4f] flex items-center justify-center gap-2">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#9c7b4f]"></i>
+              <span>Customize For Your Sweet Shop</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Product 2: Royal Folio Wedding Invitation Box -->
+        <div class="product-card neu-flat rounded-3xl p-5 space-y-4 transition hover:-translate-y-1" data-category="wedding">
+          <div class="neu-concave rounded-2xl p-4 h-64 relative flex items-center justify-center overflow-hidden border border-white">
+            <div class="absolute top-3 left-3 neu-tag px-2.5 py-1 rounded-md text-[10px] font-bold text-rose-700">
+              Ribbon & Acrylic Monogram
+            </div>
+            
+            <div id="p2-view" class="w-full h-full flex items-center justify-center transition-all duration-300">
+              <!-- Default Closed Top Angle -->
+              <div class="relative w-48 h-36 bg-gradient-to-br from-[#faf4f2] to-[#eeded9] rounded-xl shadow-lg border border-rose-300/40 flex flex-col items-center justify-center p-3 text-center">
+                <!-- Ribbon Tie graphic -->
+                <div class="absolute w-full h-4 bg-rose-200/60 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                  <div class="w-6 h-6 rounded-full bg-white shadow flex items-center justify-center text-[10px] font-serif-luxury font-bold text-rose-700">A&S</div>
+                </div>
+                <div class="text-[9px] uppercase tracking-widest text-slate-400 mt-auto">Shubh Vivah</div>
+              </div>
+            </div>
+
+            <div class="absolute bottom-2 inset-x-2 flex justify-center gap-1.5 z-10">
+              <button onclick="changeProductView('p2', 'closed')" class="p2-btn text-[10px] px-2 py-0.5 rounded neu-button active">Closed Folio</button>
+              <button onclick="changeProductView('p2', 'inside')" class="p2-btn text-[10px] px-2 py-0.5 rounded neu-button">Insert Inserts</button>
+              <button onclick="changeProductView('p2', 'side')" class="p2-btn text-[10px] px-2 py-0.5 rounded neu-button">Book Fold</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-serif-luxury text-xl font-bold text-slate-800">Rajwada Folio Wedding Box</h3>
+                <p class="text-xs text-slate-500">Magnetic Flap, Card Inserts + Mithai Drawer</p>
+              </div>
+              <span class="text-xs font-bold text-[#9c7b4f] neu-tag px-2.5 py-1 rounded-lg">₹120 - ₹250 / pc</span>
+            </div>
+
+            <div class="mt-3 grid grid-cols-2 gap-2 text-[11px] text-slate-600 border-t border-slate-200/80 pt-3">
+              <div>• <strong>MOQ:</strong> 250 Pieces</div>
+              <div>• <strong>Embossing:</strong> 3D Micro-Emboss</div>
+              <div>• <strong>Inserts:</strong> 3 Wedding Functions</div>
+              <div>• <strong>Closure:</strong> Magnetic Snap</div>
+            </div>
+
+            <button onclick="openQuoteWithProduct('Rajwada Folio Wedding Box')" class="w-full mt-4 py-2.5 rounded-xl neu-button text-xs font-bold text-slate-700 hover:text-[#9c7b4f] flex items-center justify-center gap-2">
+              <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-500"></i>
+              <span>Customize Wedding Invites</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Product 3: 4-Jar Dry Fruit Luxury Rigid Hamper -->
+        <div class="product-card neu-flat rounded-3xl p-5 space-y-4 transition hover:-translate-y-1" data-category="dryfruit">
+          <div class="neu-concave rounded-2xl p-4 h-64 relative flex items-center justify-center overflow-hidden border border-white">
+            <div class="absolute top-3 left-3 neu-tag px-2.5 py-1 rounded-md text-[10px] font-bold text-amber-700">
+              Diwali & Festive Special
+            </div>
+            
+            <div id="p3-view" class="w-full h-full flex items-center justify-center transition-all duration-300">
+              <!-- Default Closed Top Angle -->
+              <div class="relative w-44 h-44 bg-gradient-to-br from-[#f2f6f4] to-[#d6e3db] rounded-2xl shadow-lg border border-[#889d8f]/40 flex flex-col items-center justify-center p-3 text-center">
+                <div class="font-serif-luxury text-base font-bold text-slate-800">Sage Grand Hamper</div>
+                <div class="text-[9px] uppercase tracking-wider text-slate-500 mt-1">Holds 4 Glass Jars (200g each)</div>
+                <div class="mt-2 w-10 h-10 rounded-full border border-dashed border-[#889d8f] flex items-center justify-center">
+                  <i data-lucide="gift" class="w-5 h-5 text-[#889d8f]"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute bottom-2 inset-x-2 flex justify-center gap-1.5 z-10">
+              <button onclick="changeProductView('p3', 'closed')" class="p3-btn text-[10px] px-2 py-0.5 rounded neu-button active">Top View</button>
+              <button onclick="changeProductView('p3', 'inside')" class="p3-btn text-[10px] px-2 py-0.5 rounded neu-button">Jar Slots</button>
+              <button onclick="changeProductView('p3', 'side')" class="p3-btn text-[10px] px-2 py-0.5 rounded neu-button">Deep Profile</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-serif-luxury text-xl font-bold text-slate-800">4-Jar Velvet Rigid Hamper</h3>
+                <p class="text-xs text-slate-500">Sturdy Kappa Board with Silk Ribbon Loop</p>
+              </div>
+              <span class="text-xs font-bold text-[#9c7b4f] neu-tag px-2.5 py-1 rounded-lg">₹95 - ₹160 / pc</span>
+            </div>
+
+            <div class="mt-3 grid grid-cols-2 gap-2 text-[11px] text-slate-600 border-t border-slate-200/80 pt-3">
+              <div>• <strong>MOQ:</strong> 300 Pieces</div>
+              <div>• <strong>Weight Cap:</strong> Up to 2.5 KG</div>
+              <div>• <strong>Foiling:</strong> Copper / Gold / Silver</div>
+              <div>• <strong>Finish:</strong> Soft-touch Velvet</div>
+            </div>
+
+            <button onclick="openQuoteWithProduct('4-Jar Velvet Rigid Hamper')" class="w-full mt-4 py-2.5 rounded-xl neu-button text-xs font-bold text-slate-700 hover:text-[#9c7b4f] flex items-center justify-center gap-2">
+              <i data-lucide="package" class="w-3.5 h-3.5 text-[#9c7b4f]"></i>
+              <span>Customize Festive Hamper</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INSTANT WHOLESALE ESTIMATE GENERATOR -->
+  <section id="calculator" class="py-16 px-4 bg-[#ebf0f5]">
+    <div class="max-w-5xl mx-auto">
+      
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#9c7b4f]">Transparent Pricing</span>
+        <h2 class="font-serif-luxury text-3xl sm:text-4xl font-bold text-slate-800 mt-1">
+          Instant Wholesale Quote Estimator
+        </h2>
+        <p class="text-slate-600 text-sm mt-2">
+          Calculate instant price approximations for your batch size, board grade, and luxury finishes.
+        </p>
+      </div>
+
+      <div class="neu-flat rounded-3xl p-6 sm:p-10 border border-white">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          
+          <!-- Controls -->
+          <div class="space-y-6">
+            
+            <!-- Box Type Select -->
+            <div>
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2">Box Category</label>
+              <select id="calcType" onchange="calculateEstimate()" class="w-full px-4 py-3 rounded-xl neu-pressed text-sm font-semibold text-slate-800 focus:outline-none">
+                <option value="mithai">Rigid Mithai Box (1000 GSM)</option>
+                <option value="wedding">Luxury Wedding Invitation Suite (1400 GSM)</option>
+                <option value="hamper">Festive Dry Fruit Rigid Hamper Box</option>
+                <option value="folding">Custom Mono-Carton Sweet Box (Budget Series)</option>
+              </select>
+            </div>
+
+            <!-- Quantity Slider -->
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Order Quantity (Units)</label>
+                <span id="qtyLabel" class="text-sm font-bold text-[#9c7b4f] px-3 py-1 rounded-lg neu-tag">1,000 Pcs</span>
+              </div>
+              <input type="range" id="calcQty" min="300" max="10000" step="100" value="1000" oninput="calculateEstimate()"
+                     class="w-full h-2 rounded-lg appearance-none bg-slate-300 accent-[#9c7b4f] cursor-pointer">
+              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>300 (Min)</span>
+                <span>2,500</span>
+                <span>5,000</span>
+                <span>10,000+</span>
+              </div>
+            </div>
+
+            <!-- Add-ons -->
+            <div>
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2">Luxury Foil & Partitions</label>
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <label class="flex items-center gap-2 p-3 rounded-xl neu-button cursor-pointer">
+                  <input type="checkbox" id="addGoldFoil" checked onchange="calculateEstimate()" class="accent-[#9c7b4f]">
+                  <span>Gold Foil Stamping</span>
+                </label>
+                <label class="flex items-center gap-2 p-3 rounded-xl neu-button cursor-pointer">
+                  <input type="checkbox" id="addUv" onchange="calculateEstimate()" class="accent-[#9c7b4f]">
+                  <span>Spot UV / Emboss</span>
+                </label>
+                <label class="flex items-center gap-2 p-3 rounded-xl neu-button cursor-pointer">
+                  <input type="checkbox" id="addFoodTray" checked onchange="calculateEstimate()" class="accent-[#9c7b4f]">
+                  <span>Food-Grade Tray</span>
+                </label>
+                <label class="flex items-center gap-2 p-3 rounded-xl neu-button cursor-pointer">
+                  <input type="checkbox" id="addRibbon" onchange="calculateEstimate()" class="accent-[#9c7b4f]">
+                  <span>Satin Ribbon Pull</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Estimate Result Card -->
+          <div class="neu-concave rounded-3xl p-6 sm:p-8 text-center space-y-6 border border-white/80">
+            
+            <div class="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
+              Factory Direct Wholesale Price
+            </div>
+
+            <div>
+              <div class="text-xs text-slate-500 uppercase tracking-widest font-semibold">Estimated Unit Rate</div>
+              <div class="font-serif-luxury text-4xl sm:text-5xl font-bold text-slate-800 mt-1" id="estUnitRate">
+                ₹52.00
+                <span class="text-xs font-sans text-slate-500 font-normal">/ piece</span>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white/60 space-y-1.5 text-xs text-slate-600">
+              <div class="flex justify-between">
+                <span>Total Estimated Batch:</span>
+                <span class="font-bold text-slate-800" id="estTotalBatch">₹52,000</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Lead Time:</span>
+                <span class="font-semibold text-emerald-700">7 - 10 Working Days</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Free Inclusions:</span>
+                <span class="font-semibold text-slate-800">Die Making + Digital Proof</span>
+              </div>
+            </div>
+
+            <!-- Send spec button -->
+            <button onclick="sendCalculatedQuoteToWhatsApp()" class="w-full py-3.5 rounded-2xl bg-emerald-600 text-white font-semibold shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition flex items-center justify-center gap-2">
+              <i data-lucide="message-circle" class="w-5 h-5"></i>
+              <span>Lock This Rate on WhatsApp</span>
+            </button>
+            <p class="text-[10px] text-slate-400">
+              *Taxes and freight extra as applicable. Exact rates finalized post vector artwork approval.
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY CLIENTS TRUST AKASHDEEP BOXES -->
+  <section id="about" class="py-16 px-4">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#9c7b4f]">Uncompromised Craft</span>
+        <h2 class="font-serif-luxury text-3xl sm:text-4xl font-bold text-slate-800 mt-1">
+          Why Top Sweet Brands & Event Planners Choose Us
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="neu-flat rounded-2xl p-6 text-center space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-xl neu-concave flex items-center justify-center text-[#9c7b4f]">
+            <i data-lucide="sparkle" class="w-6 h-6"></i>
+          </div>
+          <h4 class="font-bold text-slate-800 text-sm">500+ Ready Dies</h4>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            No expensive new die-punch costs. Choose from hundreds of tested shapes, magnetic folios, and double drawer configurations.
+          </p>
+        </div>
+
+        <div class="neu-flat rounded-2xl p-6 text-center space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-xl neu-concave flex items-center justify-center text-[#9c7b4f]">
+            <i data-lucide="award" class="w-6 h-6"></i>
+          </div>
+          <h4 class="font-bold text-slate-800 text-sm">Certified Food-Grade</h4>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Non-toxic inks, odorless adhesives, and virgin food trays so your Kaju Katli, Ladoos, and chocolates remain 100% pure & fragrant.
+          </p>
+        </div>
+
+        <div class="neu-flat rounded-2xl p-6 text-center space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-xl neu-concave flex items-center justify-center text-[#9c7b4f]">
+            <i data-lucide="printer" class="w-6 h-6"></i>
+          </div>
+          <h4 class="font-bold text-slate-800 text-sm">In-House Foil & UV</h4>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            High-speed Heidelberg offset printing with precision German gold hot-foil embossing and velvet thermal lamination.
+          </p>
+        </div>
+
+        <div class="neu-flat rounded-2xl p-6 text-center space-y-3">
+          <div class="w-12 h-12 mx-auto rounded-xl neu-concave flex items-center justify-center text-[#9c7b4f]">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <h4 class="font-bold text-slate-800 text-sm">Zero Crush Packing</h4>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Heavy 7-ply master export cartons with edge protectors ensure your boxes arrive in immaculate, showroom condition anywhere in India.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA BANNER: REQUEST PHYSICAL SAMPLE KIT -->
+  <section class="py-12 px-4">
+    <div class="max-w-5xl mx-auto neu-concave rounded-3xl p-8 sm:p-12 text-center space-y-6 border border-white">
+      <span class="px-3 py-1 rounded-full neu-tag text-xs font-bold uppercase tracking-wider text-[#9c7b4f]">
+        Touch & Feel The Quality
+      </span>
+      <h2 class="font-serif-luxury text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 max-w-2xl mx-auto">
+        Want to inspect our paper GSM & foil finish in your hands?
+      </h2>
+      <p class="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
+        Order our curated <strong>Akashdeep Master Sample Kit</strong> containing 5 popular box shapes, paper texture swatch book, and gold foil samples delivered to your doorstep.
+      </p>
+      <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button onclick="openSampleKitModal()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#9c7b4f] to-[#b38b4d] text-white text-sm font-semibold shadow-md hover:scale-[1.02] transition">
+          Request Sample Kit Box
+        </button>
+        <a href="tel:+919876543210" class="w-full sm:w-auto px-6 py-3.5 rounded-xl neu-button text-sm font-semibold text-slate-700 flex items-center justify-center gap-2">
+          <i data-lucide="phone-call" class="w-4 h-4 text-[#9c7b4f]"></i>
+          <span>Call Manufacturing Desk</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="mt-16 bg-[#ebf0f6] border-t border-slate-200/80 py-12 px-4 text-slate-600">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      
+      <div class="space-y-3">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-lg neu-flat flex items-center justify-center text-[#9c7b4f]">
+            <i data-lucide="package" class="w-4 h-4"></i>
+          </div>
+          <span class="font-serif-luxury text-xl font-bold text-slate-800">AKASHDEEP BOXES</span>
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Premium packaging studio creating bespoke rigid mithai boxes, wedding invitation boxes, and luxury gift packaging since 2012.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Popular Packaging</h4>
+        <ul class="text-xs space-y-2 text-slate-500">
+          <li><a href="#collections" class="hover:text-slate-800">Rigid Sweet Boxes (250g - 1kg)</a></li>
+          <li><a href="#collections" class="hover:text-slate-800">Wedding Card Boxes with Drawers</a></li>
+          <li><a href="#collections" class="hover:text-slate-800">Velvet Dry Fruit Gift Hampers</a></li>
+          <li><a href="#collections" class="hover:text-slate-800">Bespoke Foil Stamped Sleeves</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Factory & Office</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Industrial Area, Packaging Hub,<br>
+          Near Transport Nagar, Rajasthan / Delhi NCR.<br>
+          <strong>Dispatching Daily Across India.</strong>
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Direct Connect</h4>
+        <p class="text-xs text-slate-500 mb-2">Speak to our senior box structural designer:</p>
+        <a href="https://wa.me/?text=Hi%20Akashdeep%20Boxes" target="_blank" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl neu-button text-xs font-semibold text-slate-700">
+          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
+          <span>Instant WhatsApp Chat</span>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto mt-10 pt-6 border-t border-slate-300/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400">
+      <div>© 2026 Akashdeep Boxes. All rights reserved. Client Demo Version.</div>
+      <div class="mt-2 sm:mt-0">Ultra-Smooth Neumorphic Packaging Platform</div>
+    </div>
+  </footer>
+
+  <!-- MODAL: SAMPLE KIT & QUICK INQUIRY -->
+  <div id="sampleKitModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="neu-flat rounded-3xl p-6 sm:p-8 max-w-lg w-full bg-[#f3f5f8] border border-white relative">
+      
+      <button onclick="closeSampleKitModal()" class="absolute top-5 right-5 p-2 rounded-xl neu-button text-slate-500 hover:text-slate-900">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="text-center space-y-2 mb-6">
+        <div class="w-12 h-12 rounded-2xl neu-concave mx-auto flex items-center justify-center text-[#9c7b4f]">
+          <i data-lucide="box" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-serif-luxury text-2xl font-bold text-slate-800" id="modalTitle">Order Physical Sample Kit</h3>
+        <p class="text-xs text-slate-500" id="modalSubtitle">We deliver sample packaging with swatches within 3-4 days to your address.</p>
+      </div>
+
+      <form id="modalForm" onsubmit="handleModalSubmit(event)" class="space-y-4">
+        <div>
+          <label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Your Name / Business Name</label>
+          <input type="text" id="modalName" required placeholder="e.g. Ramesh Sweet Mart or Pooja Gupta" 
+                 class="w-full px-4 py-2.5 rounded-xl neu-pressed text-xs sm:text-sm text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#9c7b4f]">
+        </div>
+
+        <div>
+          <label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">WhatsApp / Phone Number</label>
+          <input type="tel" id="modalPhone" required placeholder="+91 98765 43210" 
+                 class="w-full px-4 py-2.5 rounded-xl neu-pressed text-xs sm:text-sm text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#9c7b4f]">
+        </div>
+
+        <div>
+          <label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">City & State</label>
+          <input type="text" id="modalCity" required placeholder="e.g. Jaipur, Rajasthan or Mumbai" 
+                 class="w-full px-4 py-2.5 rounded-xl neu-pressed text-xs sm:text-sm text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#9c7b4f]">
+        </div>
+
+        <div>
+          <label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Estimated Quantity Needed</label>
+          <select id="modalQtyNeed" class="w-full px-4 py-2.5 rounded-xl neu-pressed text-xs text-slate-700 focus:outline-none">
+            <option>300 - 500 Pieces (Standard Event / Trial)</option>
+            <option>1,000 - 2,500 Pieces (Sweet Shop Regular)</option>
+            <option>5,000+ Pieces (Wholesale Festive Bulk)</option>
+            <option>Just want to see Sample Kit Quality first</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#9c7b4f] to-[#b38b4d] text-white text-xs sm:text-sm font-semibold shadow hover:scale-[1.01] transition flex items-center justify-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span>Confirm & Forward to Production WhatsApp</span>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC & 3D ENGINE -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // -------------------------------------------------------------
+    // 3D REAL-TIME BOX ENGINE LOGIC
+    // -------------------------------------------------------------
+    const boxEl = document.getElementById('box3D');
+    const canvasEl = document.getElementById('canvas3D');
+    
+    // Rotation state
+    let rotX = -25;
+    let rotY = 35;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let isLidOpen = false;
+
+    // Apply initial transform
+    function updateBoxTransform() {
+      if (boxEl) {
+        boxEl.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      }
+    }
+    updateBoxTransform();
+
+    // Mouse / Touch Rotation Handlers
+    canvasEl.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      
+      rotY += dx * 0.5;
+      rotX = Math.max(-85, Math.min(85, rotX - dy * 0.5));
+      
+      startX = e.clientX;
+      startY = e.clientY;
+      updateBoxTransform();
+    });
+
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Touch Support for Mobile
+    canvasEl.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - startX;
+      const dy = e.touches[0].clientY - startY;
+      
+      rotY += dx * 0.6;
+      rotX = Math.max(-85, Math.min(85, rotX - dy * 0.6));
+      
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      updateBoxTransform();
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => { isDragging = false; });
+
+    // Preset Angles
+    function setAngle(view) {
+      if (view === 'isometric') {
+        rotX = -25;
+        rotY = 35;
+      } else if (view === 'top') {
+        rotX = -89;
+        rotY = 0;
+      } else if (view === 'front') {
+        rotX = 0;
+        rotY = 0;
+      } else if (view === 'side') {
+        rotX = 0;
+        rotY = 90;
+      }
+      updateBoxTransform();
+    }
+
+    function resetRotation() {
+      setAngle('isometric');
+    }
+
+    // Toggle Lid Open/Close
+    function toggleLid() {
+      isLidOpen = !isLidOpen;
+      const btn = document.getElementById('btnLid');
+      const label = document.getElementById('lidStatusLabel');
+      
+      if (isLidOpen) {
+        // Animate top face tilt backwards to reveal inside
+        document.querySelector('.face-top').style.transform = 'rotateX(170deg) translateZ(40px)';
+        label.innerText = 'Close Lid';
+        btn.classList.add('active');
+      } else {
+        document.querySelector('.face-top').style.transform = 'rotateX(90deg) translateZ(40px)';
+        label.innerText = 'Open Lid';
+        btn.classList.remove('active');
+      }
+    }
+
+    // Live Deboss / Emboss Typing Handlers
+    const inputBrand = document.getElementById('inputBrandName');
+    const inputSub = document.getElementById('inputSubtext');
+    const previewBrand = document.getElementById('previewBrandName');
+    const previewSub = document.getElementById('previewSubtext');
+    const previewFront = document.getElementById('previewFrontSmall');
+
+    inputBrand.addEventListener('input', (e) => {
+      const val = e.target.value.trim() || 'Your Brand';
+      previewBrand.innerText = val;
+      previewFront.innerText = val;
+    });
+
+    inputSub.addEventListener('input', (e) => {
+      previewSub.innerText = e.target.value.trim() || 'Luxury Rigid Edition';
+    });
+
+    // Switch Box Type
+    let currentBoxType = 'Mithai Luxury Box';
+    function setBoxType(type) {
+      document.querySelectorAll('.box-type-btn').forEach(b => b.classList.remove('active'));
+      const ribbon = document.getElementById('ribbonOverlay');
+      
+      if (type === 'mithai') {
+        document.getElementById('btnTypeMithai').classList.add('active');
+        currentBoxType = 'Mithai Luxury Box';
+        ribbon.classList.add('hidden');
+        if (inputBrand.value === 'A & S' || inputBrand.value === 'Luxury Hamper') {
+          inputBrand.value = 'Shree Sweets';
+          inputSub.value = 'Pure Desi Ghee Confections';
+          previewBrand.innerText = 'Shree Sweets';
+          previewSub.innerText = 'Pure Desi Ghee Confections';
+          previewFront.innerText = 'Shree Sweets';
+        }
+      } else if (type === 'wedding') {
+        document.getElementById('btnTypeWedding').classList.add('active');
+        currentBoxType = 'Wedding Card Rigid Box';
+        ribbon.classList.remove('hidden');
+        inputBrand.value = 'A & S';
+        inputSub.value = 'Shubh Vivah • Save The Date';
+        previewBrand.innerText = 'A & S';
+        previewSub.innerText = 'Shubh Vivah • Save The Date';
+        previewFront.innerText = 'A & S';
+      } else if (type === 'hamper') {
+        document.getElementById('btnTypeHamper').classList.add('active');
+        currentBoxType = 'Dryfruit Luxury Hamper';
+        ribbon.classList.remove('hidden');
+        inputBrand.value = 'Royal Dryfruits';
+        inputSub.value = 'Handpicked Kashmiri Dryfruits';
+        previewBrand.innerText = 'Royal Dryfruits';
+        previewSub.innerText = 'Handpicked Kashmiri Dryfruits';
+        previewFront.innerText = 'Royal Dryfruits';
+      }
+      document.getElementById('badgeBoxType').innerText = currentBoxType;
+    }
+
+    // Switch Finish & Textures
+    let currentFinishName = 'Gold Foil Emboss';
+    function setFinish(finishClass, finishName, textEffectClass) {
+      document.querySelectorAll('.finish-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      
+      currentFinishName = finishName;
+      document.getElementById('badgeFinish').innerText = finishName;
+
+      // Update all faces of the 3D box
+      const faces = document.querySelectorAll('.box-face');
+      const allFinishClasses = ['finish-gold-foil', 'finish-matte-cashmere', 'finish-sage-luxury', 'finish-pearl-blush'];
+      
+      faces.forEach(f => {
+        allFinishClasses.forEach(c => f.classList.remove(c));
+        f.classList.add(finishClass);
+      });
+
+      // Update Typography effects
+      previewBrand.className = `font-serif-luxury text-2xl sm:text-3xl font-bold tracking-wide mt-1 ${textEffectClass}`;
+    }
+
+    // Share 3D Configuration Directly via WhatsApp
+    function shareCustomConfigWhatsApp() {
+      const brand = inputBrand.value || 'Akashdeep Custom';
+      const text = `Hello Akashdeep Boxes! I configured a box on your 3D visualizer:%0A- Box Type: ${encodeURIComponent(currentBoxType)}%0A- Brand Name: ${encodeURIComponent(brand)}%0A- Selected Finish: ${encodeURIComponent(currentFinishName)}%0APlease quote for 1000 pcs with freight.`;
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    // -------------------------------------------------------------
+    // MULTI-ANGLE PRODUCT SHOWCASE LOGIC
+    // -------------------------------------------------------------
+    const productViewsData = {
+      p1: {
+        closed: `
+          <div class="relative w-44 h-40 bg-gradient-to-br from-[#faf6f0] to-[#e8decb] rounded-xl shadow-lg border border-[#c5a880]/40 flex flex-col items-center justify-center p-3 text-center">
+            <div class="w-full h-full border border-dashed border-[#b38b4d]/40 rounded-lg p-2 flex flex-col justify-between items-center">
+              <div class="w-3 h-3 rounded-full bg-[#b38b4d]/40"></div>
+              <div>
+                <div class="text-[8px] tracking-[0.2em] uppercase text-[#b38b4d] font-bold">Heritage Sweets</div>
+                <div class="font-serif-luxury text-lg font-bold text-slate-800">Royal Barfi Box</div>
+                <div class="text-[9px] text-slate-500">12 Cavity Food-Grade Tray</div>
+              </div>
+              <div class="w-8 h-1 bg-[#b38b4d]/30 rounded-full"></div>
+            </div>
+          </div>`,
+        inside: `
+          <div class="relative w-44 h-40 bg-amber-50 rounded-xl shadow-inner border border-amber-300 p-2 grid grid-cols-4 grid-rows-3 gap-1.5">
+            ${Array(12).fill(0).map((_, i) => `
+              <div class="rounded bg-gradient-to-br from-amber-100 to-amber-200 border border-amber-300/60 flex items-center justify-center text-[7px] text-amber-800 font-bold">
+                Mithai
+              </div>
+            `).join('')}
+          </div>`,
+        side: `
+          <div class="relative w-48 h-20 bg-gradient-to-r from-[#e8decb] to-[#faf6f0] rounded-lg shadow-md border-b-4 border-[#b38b4d] flex items-center justify-between px-4 text-xs font-semibold text-slate-700">
+            <span>Rigid Edge (1200 GSM)</span>
+            <span class="text-[10px] bg-[#b38b4d] text-white px-2 py-0.5 rounded">Deep 2.2"</span>
+          </div>`
+      },
+      p2: {
+        closed: `
+          <div class="relative w-48 h-36 bg-gradient-to-br from-[#faf4f2] to-[#eeded9] rounded-xl shadow-lg border border-rose-300/40 flex flex-col items-center justify-center p-3 text-center">
+            <div class="absolute w-full h-4 bg-rose-200/60 top-1/2 -translate-y-1/2 flex items-center justify-center">
+              <div class="w-6 h-6 rounded-full bg-white shadow flex items-center justify-center text-[10px] font-serif-luxury font-bold text-rose-700">A&S</div>
+            </div>
+            <div class="text-[9px] uppercase tracking-widest text-slate-400 mt-auto">Shubh Vivah</div>
+          </div>`,
+        inside: `
+          <div class="relative w-52 h-36 bg-[#fbf8f7] rounded-xl border border-rose-200 p-2 flex gap-2">
+            <div class="w-1/2 h-full bg-white rounded border border-rose-100 p-1.5 text-[8px] flex flex-col justify-between">
+              <span class="font-serif-luxury font-bold text-rose-800">Wedding Invite</span>
+              <span class="text-[7px] text-slate-400">Haldi • Sangeet • Pheras</span>
+            </div>
+            <div class="w-1/2 h-full bg-rose-50 rounded border border-rose-200 p-1.5 flex flex-col items-center justify-center text-center">
+              <span class="text-[8px] font-bold text-rose-800">Kaju Katli Drawer</span>
+              <span class="text-[7px] text-slate-500">250g Compartment</span>
+            </div>
+          </div>`,
+        side: `
+          <div class="relative w-48 h-24 bg-[#eeded9] rounded-l-xl shadow-md border-l-4 border-rose-400 flex items-center justify-center text-xs font-semibold text-rose-900">
+            Book Fold Spine with Golden Tassel
+          </div>`
+      },
+      p3: {
+        closed: `
+          <div class="relative w-44 h-44 bg-gradient-to-br from-[#f2f6f4] to-[#d6e3db] rounded-2xl shadow-lg border border-[#889d8f]/40 flex flex-col items-center justify-center p-3 text-center">
+            <div class="font-serif-luxury text-base font-bold text-slate-800">Sage Grand Hamper</div>
+            <div class="text-[9px] uppercase tracking-wider text-slate-500 mt-1">Holds 4 Glass Jars</div>
+            <div class="mt-2 w-10 h-10 rounded-full border border-dashed border-[#889d8f] flex items-center justify-center">
+              <i data-lucide="gift" class="w-5 h-5 text-[#889d8f]"></i>
+            </div>
+          </div>`,
+        inside: `
+          <div class="relative w-44 h-44 bg-[#e8f0ec] rounded-2xl border border-[#889d8f] p-3 grid grid-cols-2 gap-2">
+            <div class="rounded-xl bg-white/80 border border-[#889d8f]/50 flex items-center justify-center text-[8px] font-bold text-slate-700">Almonds</div>
+            <div class="rounded-xl bg-white/80 border border-[#889d8f]/50 flex items-center justify-center text-[8px] font-bold text-slate-700">Cashews</div>
+            <div class="rounded-xl bg-white/80 border border-[#889d8f]/50 flex items-center justify-center text-[8px] font-bold text-slate-700">Pistachios</div>
+            <div class="rounded-xl bg-white/80 border border-[#889d8f]/50 flex items-center justify-center text-[8px] font-bold text-slate-700">Raisins</div>
+          </div>`,
+        side: `
+          <div class="relative w-48 h-24 bg-gradient-to-r from-[#d6e3db] to-[#f2f6f4] rounded-xl shadow-md border-b-4 border-[#889d8f] flex flex-col items-center justify-center text-xs font-semibold text-slate-700">
+            <span>Heavy-Duty Rigid Hamper</span>
+            <span class="text-[9px] text-[#55695c]">Tested for 2.5 KG Glass Weight</span>
+          </div>`
+      }
+    };
+
+    function changeProductView(productId, viewName) {
+      const container = document.getElementById(`${productId}-view`);
+      if (!container || !productViewsData[productId][viewName]) return;
+      
+      container.style.opacity = '0';
+      setTimeout(() => {
+        container.innerHTML = productViewsData[productId][viewName];
+        container.style.opacity = '1';
+        lucide.createIcons();
+      }, 150);
+
+      // Button highlight
+      document.querySelectorAll(`.${productId}-btn`).forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    // Filter Catalog items
+    function filterCatalog(category) {
+      document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // -------------------------------------------------------------
+    // INSTANT QUOTE ESTIMATOR CALCULATOR
+    // -------------------------------------------------------------
+    function calculateEstimate() {
+      const type = document.getElementById('calcType').value;
+      const qty = parseInt(document.getElementById('calcQty').value, 10);
+      
+      document.getElementById('qtyLabel').innerText = `${qty.toLocaleString('en-IN')} Pcs`;
+
+      // Base pricing structure
+      let baseRate = 42; // default mithai
+      if (type === 'wedding') baseRate = 120;
+      if (type === 'hamper') baseRate = 90;
+      if (type === 'folding') baseRate = 18;
+
+      // Economy of scale factor
+      let discountFactor = 1.0;
+      if (qty >= 1000) discountFactor = 0.88;
+      if (qty >= 2500) discountFactor = 0.78;
+      if (qty >= 5000) discountFactor = 0.68;
+
+      // Add-on extras
+      let addOns = 0;
+      if (document.getElementById('addGoldFoil').checked) addOns += 5.5;
+      if (document.getElementById('addUv').checked) addOns += 3.5;
+      if (document.getElementById('addFoodTray').checked) addOns += 4.0;
+      if (document.getElementById('addRibbon').checked) addOns += 6.0;
+
+      const finalUnitRate = Math.round((baseRate * discountFactor + addOns) * 10) / 10;
+      const totalBatch = Math.round(finalUnitRate * qty);
+
+      document.getElementById('estUnitRate').innerHTML = `₹${finalUnitRate.toFixed(2)} <span class="text-xs font-sans text-slate-500 font-normal">/ piece</span>`;
+      document.getElementById('estTotalBatch').innerText = `₹${totalBatch.toLocaleString('en-IN')}`;
+    }
+
+    function sendCalculatedQuoteToWhatsApp() {
+      const typeName = document.getElementById('calcType').selectedOptions[0].text;
+      const qty = document.getElementById('calcQty').value;
+      const rate = document.getElementById('estUnitRate').innerText;
+      const total = document.getElementById('estTotalBatch').innerText;
+
+      const text = `Hello Akashdeep Boxes! I generated an instant estimate on your website:%0A- Category: ${encodeURIComponent(typeName)}%0A- Quantity: ${qty} Pcs%0A- Estimated Rate: ${encodeURIComponent(rate)} (Batch approx: ${encodeURIComponent(total)})%0A%0APlease verify availability and delivery timeline for my location.`;
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    // -------------------------------------------------------------
+    // MODAL DIALOGS & LEAD GEN
+    // -------------------------------------------------------------
+    function openSampleKitModal() {
+      document.getElementById('modalTitle').innerText = 'Order Physical Sample Kit';
+      document.getElementById('modalSubtitle').innerText = 'Inspect rigid Kappa GSM, hot-foil stamps & partitions at your shop/office.';
+      document.getElementById('sampleKitModal').classList.remove('hidden');
+      document.getElementById('sampleKitModal').classList.add('flex');
+    }
+
+    function openQuoteWithProduct(productName) {
+      document.getElementById('modalTitle').innerText = `Customize ${productName}`;
+      document.getElementById('modalSubtitle').innerText = 'Enter your details and our production engineer will send vector die-lines.';
+      document.getElementById('sampleKitModal').classList.remove('hidden');
+      document.getElementById('sampleKitModal').classList.add('flex');
+    }
+
+    function closeSampleKitModal() {
+      document.getElementById('sampleKitModal').classList.add('hidden');
+      document.getElementById('sampleKitModal').classList.remove('flex');
+    }
+
+    function handleModalSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('modalName').value;
+      const phone = document.getElementById('modalPhone').value;
+      const city = document.getElementById('modalCity').value;
+      const qty = document.getElementById('modalQtyNeed').value;
+      const title = document.getElementById('modalTitle').innerText;
+
+      const message = `*Inquiry from Akashdeep Boxes Web Demo*%0A*Request:* ${encodeURIComponent(title)}%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A*City:* ${encodeURIComponent(city)}%0A*Requirement:* ${encodeURIComponent(qty)}`;
+      
+      closeSampleKitModal();
+      window.open(`https://wa.me/?text=${message}`, '_blank');
+    }
+
+    // Run Initial calculation on page load
+    window.onload = function() {
+      calculateEstimate();
+    };
+  </script>
+</body>
+</html>
